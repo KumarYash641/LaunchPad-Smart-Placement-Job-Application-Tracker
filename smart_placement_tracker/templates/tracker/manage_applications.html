@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Manage applications · LaunchPad{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <p class="eyebrow">ADMIN WORKSPACE</p>
+    <h1>Manage applications</h1>
+    <p>Update applicant progress. Company and job records can be managed in Django Admin.</p>
+</div>
+<section class="panel">
+    {% for app in applications %}
+    <div class="application-row">
+        <div><strong>{{ app.job.title }} · {{ app.student.username }}</strong>
+            <p>{{ app.job.company.name }} · {{ app.applied_at|date:"d M Y" }}</p>
+        </div>
+        <form method="post" class="status-form">{% csrf_token %}<input type="hidden" name="application_id"
+                value="{{ app.id }}"><select name="status">{% for value,label in status_choices %}<option
+                    value="{{ value }}" {% if app.status==value %}selected{% endif %}>{{ label }}</option>{% endfor
+                %}</select><button class="btn small primary">Update</button></form>
+    </div>
+    {% empty %}<p class="empty">No applications have been submitted.</p>{% endfor %}
+</section>
+{% endblock %}

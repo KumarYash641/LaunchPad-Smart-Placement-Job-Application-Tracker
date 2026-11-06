@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Create account · LaunchPad{% endblock %}
+{% block content %}
+<section class="auth-card">
+  <p class="eyebrow">GET STARTED</p><h1>Create your student account</h1>
+  {% if form.non_field_errors %}<div class="form-errors">{% for error in form.non_field_errors %}<p class="error-text">{{ error }}</p>{% endfor %}</div>{% endif %}
+  <form method="post">{% csrf_token %}
+    <p>
+      <label for="id_full_name">Full name</label>
+      <input type="text" name="full_name" id="id_full_name" maxlength="120" value="{{ form.full_name.value|default:'' }}" required placeholder="e.g. Yash Sharma">
+      {% if form.full_name.errors %}<span class="field-error">{{ form.full_name.errors.0 }}</span>{% endif %}
+    </p>
+    <p>
+      <label for="id_username">Username</label>
+      <input type="text" name="username" id="id_username" maxlength="150" value="{{ form.username.value|default:'' }}" required placeholder="e.g. yash_sharma">
+      {% if form.username.errors %}<span class="field-error">{{ form.username.errors.0 }}</span>{% endif %}
+    </p>
+    <p>
+      <label for="id_email">Email address</label>
+      <input type="email" name="email" id="id_email" value="{{ form.email.value|default:'' }}" required placeholder="you@example.com">
+      {% if form.email.errors %}<span class="field-error">{{ form.email.errors.0 }}</span>{% endif %}
+    </p>
+    <p>
+      <label for="id_password1">Password</label>
+      <input type="password" name="password1" id="id_password1" required placeholder="Min. 8 characters">
+      {% if form.password1.errors %}<span class="field-error">{{ form.password1.errors.0 }}</span>{% endif %}
+    </p>
+    <p>
+      <label for="id_password2">Confirm password</label>
+      <input type="password" name="password2" id="id_password2" required placeholder="Re-enter your password">
+      {% if form.password2.errors %}<span class="field-error">{{ form.password2.errors.0 }}</span>{% endif %}
+    </p>
+    <button class="btn primary full">Create account</button>
+  </form>
+  <p class="muted">Already registered? <a href="{% url 'login' %}">Log in</a></p>
+</section>
+{% endblock %}

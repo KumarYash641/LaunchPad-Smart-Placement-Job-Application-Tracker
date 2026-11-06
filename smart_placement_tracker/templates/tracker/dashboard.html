@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · LaunchPad{% endblock %}
+{% block content %}
+<section class="hero">
+  <div><p class="eyebrow">YOUR CAREER, ORGANIZED</p><h1>Welcome{% if profile %}, {{ profile.full_name }}{% endif %}.</h1>
+  <p class="hero-copy">Find opportunities, check your eligibility and keep every application in one place.</p>
+  <a class="btn light" href="{% url 'job_list' %}">Explore opportunities →</a></div>
+  <div class="hero-mark">LP</div>
+</section>
+<div class="section-heading"><div><p class="eyebrow">OVERVIEW</p><h2>Your placement snapshot</h2></div><a href="{% url 'profile' %}" class="text-link">Update profile →</a></div>
+<div class="stats-grid">
+  <div class="stat-card"><span>Total applications</span><strong>{{ stats.total }}</strong></div>
+  <div class="stat-card"><span>Shortlisted</span><strong>{{ stats.shortlisted }}</strong></div>
+  <div class="stat-card"><span>Selected</span><strong>{{ stats.selected }}</strong></div>
+  <div class="stat-card"><span>Rejected</span><strong>{{ stats.rejected }}</strong></div>
+</div>
+<div class="two-column">
+  <section class="panel"><div class="section-heading"><h2>Recent applications</h2><a class="text-link" href="{% url 'my_applications' %}">View all</a></div>
+    {% for app in recent_applications %}<div class="list-row"><div><strong>{{ app.job.title }}</strong><p>{{ app.job.company.name }}</p></div><span class="status">{{ app.status }}</span></div>
+    {% empty %}<p class="empty">No applications yet. Explore jobs to get started.</p>{% endfor %}
+  </section>
+  <section class="panel"><div class="section-heading"><h2>Eligible opportunities</h2></div>
+    {% for job in recommended_jobs %}<div class="list-row"><div><strong>{{ job.title }}</strong><p>{{ job.company.name }}</p></div><a class="text-link" href="{% url 'job_detail' job.id %}">View</a></div>
+    {% empty %}<p class="empty">Complete your profile with CGPA and skills to see eligible roles.</p>{% endfor %}
+  </section>
+</div>
+{% endblock %}

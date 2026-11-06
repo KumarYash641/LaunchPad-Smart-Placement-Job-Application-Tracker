@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Find jobs · LaunchPad{% endblock %}
+{% block content %}
+<div class="page-heading"><p class="eyebrow">OPPORTUNITIES</p><h1>Find your next opportunity</h1><p>Explore roles and check how your profile matches their criteria.</p></div>
+<form method="get" class="search-form"><input name="q" value="{{ query }}" placeholder="Search by role, company, location or skill"><button class="btn primary">Search</button></form>
+<div class="job-grid">
+{% for job in page_obj %}
+  <article class="job-card"><div class="job-top"><span class="tag">{{ job.employment_type }}</span><span class="muted">{{ job.location|default:"Location flexible" }}</span></div>
+    <h2>{{ job.title }}</h2><p class="company">{{ job.company.name }}</p><p class="job-meta">Minimum CGPA: {{ job.min_cgpa }} · Skills: {{ job.required_skills|default:"Not specified" }}</p>
+    <a class="btn outline" href="{% url 'job_detail' job.id %}">View details →</a>
+  </article>
+{% empty %}<p class="empty">No jobs found. Try another search.</p>{% endfor %}
+</div>
+{% if page_obj.has_other_pages %}<div class="pagination">{% if page_obj.has_previous %}<a href="?q={{ query }}&page={{ page_obj.previous_page_number }}">← Previous</a>{% endif %}<span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>{% if page_obj.has_next %}<a href="?q={{ query }}&page={{ page_obj.next_page_number }}">Next →</a>{% endif %}</div>{% endif %}
+{% endblock %}

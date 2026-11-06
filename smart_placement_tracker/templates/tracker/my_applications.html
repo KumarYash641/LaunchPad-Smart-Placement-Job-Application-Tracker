@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}My applications · LaunchPad{% endblock %}
+{% block content %}
+<div class="page-heading"><p class="eyebrow">APPLICATION TRACKER</p><h1>My applications</h1><p>Follow the progress of every role you've applied for.</p></div>
+<section class="panel">
+{% for app in applications %}<div class="application-row"><div><strong>{{ app.job.title }}</strong><p>{{ app.job.company.name }} · Applied {{ app.applied_at|date:"d M Y" }}</p></div><span class="status">{{ app.status }}</span></div>
+{% empty %}<p class="empty">You haven't applied for any jobs yet.</p><a class="btn primary" href="{% url 'job_list' %}">Browse jobs</a>{% endfor %}
+</section>
+{% endblock %}

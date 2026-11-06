@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}My profile · LaunchPad{% endblock %}
+{% block content %}
+<div class="page-heading"><p class="eyebrow">STUDENT PROFILE</p><h1>Build your profile</h1><p>Keep your academic details and skills up to date for eligibility checks.</p></div>
+<section class="panel form-panel"><form method="post">{% csrf_token %}{{ form.as_p }}<button class="btn primary">Save profile</button></form></section>
+{% endblock %}
